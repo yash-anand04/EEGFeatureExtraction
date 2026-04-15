@@ -52,11 +52,13 @@ def animate(frame):
     plt.tight_layout()
 
 # Create & save animation
+import os
+gif_path = os.path.join(os.path.dirname(__file__), '..', '..', 'outputs', 'eeg_magnitude_animation.gif')
 ani = FuncAnimation(fig, animate, frames=len(time), interval=50, blit=False, repeat=True)
-ani.save('eeg_magnitude_animation.gif', writer='pillow', fps=20)
+ani.save(gif_path, writer='pillow', fps=20)
 plt.close()
 
-print("✅ Video saved: eeg_magnitude_animation.gif")
+print(f"✅ Video saved: {gif_path}")
 
 # 4️⃣ 3D BEM
 mne.viz.plot_alignment(
@@ -70,5 +72,6 @@ mne.viz.plot_alignment(
 input("Press Enter to close 3D view...")
 
 # 5️⃣ SAVE TRANSFORM
-mne.write_trans('head_mri-trans.fif', trans, overwrite=True)
+trans_path = os.path.join(os.path.dirname(__file__), '..', '..', 'models', 'head_mri-trans.fif')
+mne.write_trans(trans_path, trans, overwrite=True)
 print("💾 Transform saved!")

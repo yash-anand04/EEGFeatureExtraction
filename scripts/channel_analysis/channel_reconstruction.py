@@ -1,3 +1,4 @@
+import os
 import mne
 import numpy as np
 import matplotlib.pyplot as plt
@@ -43,12 +44,12 @@ class ChannelReconstructionAnalyzer:
     def get_model_filename(self, input_channels):
         """Generate a filename for saving/loading the model based on input channels"""
         ch_str = '_'.join(input_channels)
-        return f"channel_reconstructor_{ch_str}.pt"
+        return os.path.join(os.path.dirname(__file__), '..', '..', 'models', f"channel_reconstructor_{ch_str}.pt")
 
     def get_scaler_filename(self, input_channels):
         """Generate a filename for saving/loading the scaler based on input channels"""
         ch_str = '_'.join(input_channels)
-        return f"scaler_{ch_str}.joblib"
+        return os.path.join(os.path.dirname(__file__), '..', '..', 'models', f"scaler_{ch_str}.joblib")
 
     def __init__(self, subjects_dir, ch_names):
         self.subjects_dir = subjects_dir
@@ -439,7 +440,7 @@ def plot_comparison_results(results):
         ax_both.legend()
         ax_both.grid(True, alpha=0.3)
         plt.tight_layout()
-        both_fig_name = f'comparison_spatialcorr_{condition_name.replace(" ", "_").replace("/", "_").lower()}.png'
+        both_fig_name = os.path.join(os.path.dirname(__file__), '..', '..', 'outputs', f'comparison_spatialcorr_{condition_name.replace(" ", "_").replace("/", "_").lower()}.png')
         plt.savefig(both_fig_name, dpi=300, bbox_inches='tight')
         plt.close(fig_both)
         # Save per-condition plot: Biophysical vs ML (peak overlap)
@@ -453,7 +454,7 @@ def plot_comparison_results(results):
         ax_both_peak.legend()
         ax_both_peak.grid(True, alpha=0.3)
         plt.tight_layout()
-        both_peak_fig_name = f'comparison_peakoverlap_{condition_name.replace(" ", "_").replace("/", "_").lower()}.png'
+        both_peak_fig_name = os.path.join(os.path.dirname(__file__), '..', '..', 'outputs', f'comparison_peakoverlap_{condition_name.replace(" ", "_").replace("/", "_").lower()}.png')
         plt.savefig(both_peak_fig_name, dpi=300, bbox_inches='tight')
         plt.close(fig_both_peak)
 
@@ -476,7 +477,8 @@ def plot_comparison_results(results):
                 ax_ts.legend()
                 ax_ts.grid(True, alpha=0.3)
                 plt.tight_layout()
-                ts_fig_name = f'timeseries_corr_{condition_name.replace(" ", "_").replace("/", "_").lower()}_{n_ch}ch.png'
+    
+                ts_fig_name = os.path.join(os.path.dirname(__file__), '..', '..', 'outputs', f'timeseries_corr_{condition_name.replace(" ", "_").replace("/", "_").lower()}_{n_ch}ch.png')
                 plt.savefig(ts_fig_name, dpi=300, bbox_inches='tight')
                 plt.close(fig_ts)
                 # Plot R² score for all channels
@@ -492,12 +494,12 @@ def plot_comparison_results(results):
                 ax_r2.legend()
                 ax_r2.grid(True, alpha=0.3)
                 plt.tight_layout()
-                r2_fig_name = f'timeseries_r2_{condition_name.replace(" ", "_").replace("/", "_").lower()}_{n_ch}ch.png'
+    
+                r2_fig_name = os.path.join(os.path.dirname(__file__), '..', '..', 'outputs', f'timeseries_r2_{condition_name.replace(" ", "_").replace("/", "_").lower()}_{n_ch}ch.png')
                 plt.savefig(r2_fig_name, dpi=300, bbox_inches='tight')
                 plt.close(fig_r2)
-
     plt.tight_layout()
-    plt.savefig('channel_reconstruction_comparison.png', dpi=300, bbox_inches='tight')
+    plt.savefig(os.path.join(os.path.dirname(__file__), '..', '..', 'outputs', 'channel_reconstruction_comparison.png'), dpi=300, bbox_inches='tight')
     plt.show()
 
     # Print summary statistics
