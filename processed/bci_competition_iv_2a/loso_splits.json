@@ -1,0 +1,119 @@
+[
+  {
+    "test_subject": "A01T",
+    "train_subjects": [
+      "A02T",
+      "A03T",
+      "A04T",
+      "A05T",
+      "A06T",
+      "A07T",
+      "A08T",
+      "A09T"
+    ]
+  },
+  {
+    "test_subject": "A02T",
+    "train_subjects": [
+      "A01T",
+      "A03T",
+      "A04T",
+      "A05T",
+      "A06T",
+      "A07T",
+      "A08T",
+      "A09T"
+    ]
+  },
+  {
+    "test_subject": "A03T",
+    "train_subjects": [
+      "A01T",
+      "A02T",
+      "A04T",
+      "A05T",
+      "A06T",
+      "A07T",
+      "A08T",
+      "A09T"
+    ]
+  },
+  {
+    "test_subject": "A04T",
+    "train_subjects": [
+      "A01T",
+      "A02T",
+      "A03T",
+      "A05T",
+      "A06T",
+      "A07T",
+      "A08T",
+      "A09T"
+    ]
+  },
+  {
+    "test_subject": "A05T",
+    "train_subjects": [
+      "A01T",
+      "A02T",
+      "A03T",
+      "A04T",
+      "A06T",
+      "A07T",
+      "A08T",
+      "A09T"
+    ]
+  },
+  {
+    "test_subject": "A06T",
+    "train_subjects": [
+      "A01T",
+      "A02T",
+      "A03T",
+      "A04T",
+      "A05T",
+      "A07T",
+      "A08T",
+      "A09T"
+    ]
+  },
+  {
+    "test_subject": "A07T",
+    "train_subjects": [
+      "A01T",
+      "A02T",
+      "A03T",
+      "A04T",
+      "A05T",
+      "A06T",
+      "A08T",
+      "A09T"
+    ]
+  },
+  {
+    "test_subject": "A08T",
+    "train_subjects": [
+      "A01T",
+      "A02T",
+      "A03T",
+      "A04T",
+      "A05T",
+      "A06T",
+      "A07T",
+      "A09T"
+    ]
+  },
+  {
+    "test_subject": "A09T",
+    "train_subjects": [
+      "A01T",
+      "A02T",
+      "A03T",
+      "A04T",
+      "A05T",
+      "A06T",
+      "A07T",
+      "A08T"
+    ]
+  }
+]

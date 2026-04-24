@@ -14,6 +14,7 @@ from mne.minimum_norm import make_inverse_operator, apply_inverse
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from pathlib import Path
 import os
 import glob
 import numpy as np
@@ -30,9 +31,12 @@ import matplotlib.pyplot as plt
 # ==========================================
 # 1. PATHS, CONSTANTS & CONFIG
 # ==========================================
-BASE_DIR = r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1"
-SUBJECTS_DIR = r"C:\Users\unnat\mne_data\MNE-fsaverage-data"
-TRANS_FILE = r"C:\Users\unnat\Desktop\EEGFeatureExtraction\head_mri-trans.fif"
+project_root = Path(__file__).resolve().parents[2]
+BASE_DIR = os.environ.get("EEG_BASE_DIR", "")
+if not BASE_DIR:
+    raise ValueError("Set EEG_BASE_DIR to the folder containing Baseline (*) trial directories.")
+SUBJECTS_DIR = os.environ.get("MNE_SUBJECTS_DIR", str(project_root / "mne_data" / "MNE-fsaverage-data"))
+TRANS_FILE = os.environ.get("EEG_TRANS_FILE", str(project_root / "head_mri-trans.fif"))
 
 ch_names = [
     'Fp1', 'Fp2', 'F7', 'F3', 'Fz', 'F4', 'F8', 

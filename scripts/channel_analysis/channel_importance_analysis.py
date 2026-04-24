@@ -7,10 +7,12 @@ from sklearn.metrics import mean_squared_error
 from scipy.stats import pearsonr
 import warnings
 warnings.filterwarnings('ignore')
+from pathlib import Path
 
 # Configuration
-subjects_dir = r"C:\Users\unnat\mne_data\MNE-fsaverage-data"
-data_base_path = r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (with_audio_and_visual_stimulus)"
+project_root = Path(__file__).resolve().parents[2]
+subjects_dir = os.environ.get("MNE_SUBJECTS_DIR", str(project_root / "mne_data" / "MNE-fsaverage-data"))
+data_base_path = os.environ.get("EEG_BASE_DIR", "")
 ch_names = ['Fp1','Fp2','F7','F3','Fz','F4','F8','T3','C3','Cz','C4','T4','T5','P3','Pz','P4','T6','O1','O2']
 n_trials = 20  # Start with 5 trials for analysis
 
@@ -48,7 +50,8 @@ class ChannelImportanceAnalyzer:
         self.bem = mne.make_bem_solution(model)
 
         # Load transformation
-        trans = mne.read_trans(r'C:\Users\unnat\Desktop\EEGFeatureExtraction\head_mri-trans.fif')
+        trans_file = os.environ.get("EEG_TRANS_FILE", str(project_root / "head_mri-trans.fif"))
+        trans = mne.read_trans(trans_file)
 
         # Create info for forward model
         info = mne.create_info(self.ch_names, 100, 'eeg')
@@ -295,10 +298,13 @@ if __name__ == "__main__":
     analyzer = ChannelImportanceAnalyzer(subjects_dir, ch_names)
 
     # Define all three baseline folders
+    base_root = os.environ.get("EEG_BASE_DIR", "")
+    if not base_root:
+        raise ValueError("Set EEG_BASE_DIR to the folder containing Baseline (*) trial directories.")
     base_paths = [
-        r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (in_silence)",
-        r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (with_audio_and_visual_stimulus)",
-        r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (with_music)"
+        os.path.join(base_root, "Baseline (in_silence)"),
+        os.path.join(base_root, "Baseline (with_audio_and_visual_stimulus)"),
+        os.path.join(base_root, "Baseline (with_music)"),
     ]
     n_trials = 20
 

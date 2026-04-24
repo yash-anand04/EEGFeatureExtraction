@@ -14,14 +14,18 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 warnings.filterwarnings('ignore')
+from pathlib import Path
 
 # Configuration
-subjects_dir = r"C:\Users\unnat\mne_data\MNE-fsaverage-data"
-# Use all three baseline conditions from Subject_1
+project_root = Path(__file__).resolve().parents[2]
+subjects_dir = os.environ.get("MNE_SUBJECTS_DIR", str(project_root / "mne_data" / "MNE-fsaverage-data"))
+base_root = os.environ.get("EEG_BASE_DIR", "")
+if not base_root:
+    raise ValueError("Set EEG_BASE_DIR to the folder containing Baseline (*) trial directories.")
 data_conditions = [
-    r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (in_silence)",
-    r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (with_audio_and_visual_stimulus)",
-    r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (with_music)"
+    os.path.join(base_root, "Baseline (in_silence)"),
+    os.path.join(base_root, "Baseline (with_audio_and_visual_stimulus)"),
+    os.path.join(base_root, "Baseline (with_music)"),
 ]
 ch_names = ['Fp1','Fp2','F7','F3','Fz','F4','F8','T3','C3','Cz','C4','T4','T5','P3','Pz','P4','T6','O1','O2']
 n_trials_per_condition = 20  # 20 trials per condition
@@ -85,7 +89,8 @@ class ChannelReconstructionAnalyzer:
         self.bem = mne.make_bem_solution(model)
 
         # Load transformation
-        trans = mne.read_trans(r'C:\Users\unnat\Desktop\EEGFeatureExtraction\head_mri-trans.fif')
+        trans_file = os.environ.get("EEG_TRANS_FILE", str(project_root / "head_mri-trans.fif"))
+        trans = mne.read_trans(trans_file)
 
         # Create info for forward model
         info = mne.create_info(self.ch_names, 100, 'eeg')
@@ -584,12 +589,15 @@ if __name__ == "__main__":
     from channel_importance_analysis import ChannelImportanceAnalyzer
 
     # Recompute combined variance importance to get top channels
-    subjects_dir = r"C:\Users\unnat\mne_data\MNE-fsaverage-data"
+    subjects_dir = os.environ.get("MNE_SUBJECTS_DIR", str(project_root / "mne_data" / "MNE-fsaverage-data"))
     ch_names = ['Fp1','Fp2','F7','F3','Fz','F4','F8','T3','C3','Cz','C4','T4','T5','P3','Pz','P4','T6','O1','O2']
+    base_root = os.environ.get("EEG_BASE_DIR", "")
+    if not base_root:
+        raise ValueError("Set EEG_BASE_DIR to the folder containing Baseline (*) trial directories.")
     base_paths = [
-        r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (in_silence)",
-        r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (with_audio_and_visual_stimulus)",
-        r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (with_music)"
+        os.path.join(base_root, "Baseline (in_silence)"),
+        os.path.join(base_root, "Baseline (with_audio_and_visual_stimulus)"),
+        os.path.join(base_root, "Baseline (with_music)"),
     ]
     n_trials = 20
     importance_analyzer = ChannelImportanceAnalyzer(subjects_dir, ch_names)

@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import os
+from pathlib import Path
 import mne
 # hyperparameter tuning
 EPOCHS = 100 # idk we will have to tune with optuna later
@@ -9,9 +11,12 @@ LEARNING_RATE = 1e-3
 
 
 #folders and paths
-BASE_DIR = "./Subject_1/"
-SUBJECTS_DIR = r"C:\Users\unnat\mne_data\MNE-fsaverage-data"
-TRANS_FILE = "./head_mri-trans.fif"
+project_root = Path(__file__).resolve().parents[2]
+BASE_DIR = os.environ.get("EEG_BASE_DIR", "")
+if not BASE_DIR:
+    raise ValueError("Set EEG_BASE_DIR to the folder containing Baseline (*) trial directories.")
+SUBJECTS_DIR = os.environ.get("MNE_SUBJECTS_DIR", str(project_root / "mne_data" / "MNE-fsaverage-data"))
+TRANS_FILE = os.environ.get("EEG_TRANS_FILE", str(project_root / "head_mri-trans.fif"))
 CONDUCTIVITIES = []
 
 TARGET_CH = "T6" #could by any channel, this is just for first run testing

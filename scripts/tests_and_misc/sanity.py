@@ -5,11 +5,15 @@ import mne
 from mne.minimum_norm import make_inverse_operator, apply_inverse
 from mne import EvokedArray
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 # --- 1. SET YOUR PATH TO ONE TRIAL ---
-file_path = r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (in_silence)\trial_01\eeg_data.csv"
-TRANS_FILE = r"C:\Users\unnat\Desktop\EEGFeatureExtraction\head_mri-trans.fif"
-SUBJECTS_DIR = r"C:\Users\unnat\mne_data\MNE-fsaverage-data"
+project_root = Path(__file__).resolve().parents[2]
+file_path = os.environ.get("EEG_CSV_FILE", "")
+if not file_path:
+	raise ValueError("Set EEG_CSV_FILE to a trial eeg_data.csv path before running this script.")
+TRANS_FILE = os.environ.get("EEG_TRANS_FILE", str(project_root / "head_mri-trans.fif"))
+SUBJECTS_DIR = os.environ.get("MNE_SUBJECTS_DIR", str(project_root / "mne_data" / "MNE-fsaverage-data"))
 
 ch_names = ['Fp1', 'Fp2', 'F7', 'F3', 'Fz', 'F4', 'F8', 'T3', 'C3', 'Cz', 'C4', 'T4', 'T5', 'P3', 'Pz', 'P4', 'T6', 'O1', 'O2']
 keep_channels = ['Fz', 'Cz', 'Pz', 'C3', 'C4', 'P3', 'P4', 'Fp1', 'Fp2', 'O1', 'O2']

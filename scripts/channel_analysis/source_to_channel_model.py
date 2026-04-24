@@ -8,6 +8,7 @@ import joblib
 import os
 import pandas as pd
 import mne
+from pathlib import Path
 
 # Dummy loader: replace with your actual data loading
 # original_data: (samples, channels)
@@ -16,15 +17,18 @@ def load_data():
     import os
     import pandas as pd
     import mne
-    subjects_dir = r"C:\Users\unnat\mne_data\MNE-fsaverage-data"
-    trans_path = r"C:\Users\unnat\Desktop\EEGFeatureExtraction\head_mri-trans.fif"
+    project_root = Path(__file__).resolve().parents[2]
+    subjects_dir = os.environ.get("MNE_SUBJECTS_DIR", str(project_root / "mne_data" / "MNE-fsaverage-data"))
+    trans_path = os.environ.get("EEG_TRANS_FILE", str(project_root / "head_mri-trans.fif"))
     ch_names = ['Fp1','Fp2','F7','F3','Fz','F4','F8','T3','C3','Cz','C4','T4','T5','P3','Pz','P4','T6','O1','O2']
     conditions = [
         "Baseline (in_silence)",
         "Baseline (with_audio_and_visual_stimulus)",
         "Baseline (with_music)"
     ]
-    base_dir = r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1"
+    base_dir = os.environ.get("EEG_BASE_DIR", "")
+    if not base_dir:
+        raise ValueError("Set EEG_BASE_DIR to the folder containing Baseline (*) trial directories.")
     trial_count = 20
     channel_data_list = []
     source_data_list = []

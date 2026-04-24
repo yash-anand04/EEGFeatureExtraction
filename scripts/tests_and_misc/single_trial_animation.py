@@ -5,9 +5,14 @@ import numpy as np
 from mne.datasets import fetch_fsaverage
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from pathlib import Path
 
 # 1️⃣ LOAD EEG DATA
-df = pd.read_csv(r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (in_silence)\trial_02\eeg_data.csv")
+project_root = Path(__file__).resolve().parents[2]
+eeg_csv_file = os.environ.get("EEG_CSV_FILE", "")
+if not eeg_csv_file:
+    raise ValueError("Set EEG_CSV_FILE to a trial eeg_data.csv path before running this script.")
+df = pd.read_csv(eeg_csv_file)
 data = df.filter(like='eeg').iloc[:, :19].values.T
 ch_names = ['Fp1','Fp2','F7','F3','Fz','F4','F8','T3','C3','Cz','C4','T4','T5','P3','Pz','P4','T6','O1','O2']
 raw = mne.io.RawArray(data, mne.create_info(ch_names, 100, 'eeg'))

@@ -3,12 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
+from pathlib import Path
 # YOUR DATA + CORRECT PATHS
-subjects_dir = r"C:\Users\unnat\mne_data\MNE-fsaverage-data"  # PARENT directory
-fs_dir = r"C:\Users\unnat\mne_data\MNE-fsaverage-data\fsaverage"  # ACTUAL fsaverage
+project_root = Path(__file__).resolve().parents[2]
+subjects_dir = os.environ.get("MNE_SUBJECTS_DIR", str(project_root / "mne_data" / "MNE-fsaverage-data"))
+fs_dir = os.path.join(subjects_dir, "fsaverage")
 
 # Load your EEG data (same as before)
-df = pd.read_csv(r"C:\Users\unnat\Desktop\EEGFeatureExtraction\Subject_1\Baseline (with_audio_and_visual_stimulus)\trial_08\eeg_data.csv")
+eeg_csv_file = os.environ.get("EEG_CSV_FILE", "")
+if not eeg_csv_file:
+    raise ValueError("Set EEG_CSV_FILE to a trial eeg_data.csv path before running this script.")
+df = pd.read_csv(eeg_csv_file)
 data = df.filter(like='eeg').iloc[:, :19].values.T
 ch_names = ['Fp1','Fp2','F7','F3','Fz','F4','F8','T3','C3','Cz','C4','T4','T5','P3','Pz','P4','T6','O1','O2']
 raw = mne.io.RawArray(data, mne.create_info(ch_names, 100, 'eeg'))
@@ -16,7 +21,8 @@ montage = mne.channels.make_standard_montage('standard_1005')
 raw.set_montage(montage, on_missing='ignore')
 raw.set_eeg_reference(ref_channels='average', projection=True)
 
-trans = mne.read_trans('head_mri-trans.fif')
+trans_file = os.environ.get("EEG_TRANS_FILE", str(project_root / "head_mri-trans.fif"))
+trans = mne.read_trans(trans_file)
 
 # ✅ FIXED subjects_dir
 print(f"Looking for surf in: {os.path.join(subjects_dir, 'MNE-fsaverage-data', 'fsaverage', 'surf', 'lh.white')}")

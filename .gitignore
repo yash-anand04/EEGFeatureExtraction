@@ -136,6 +136,10 @@ ENV/
 env.bak/
 venv.bak/
 
+# Data folders
+Data_BCI_Competition/
+Data_CHB-MIT/
+
 # Spyder project settings
 .spyderproject
 .spyproject
