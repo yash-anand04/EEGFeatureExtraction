@@ -1,0 +1,30 @@
+{
+  "rows": 54,
+  "splits": 9,
+  "method": "hybrid_residual_mlp",
+  "device": "cpu",
+  "architecture": "ResidualMLP(input \u2192 512 \u2192 256 \u2192 output)",
+  "mean_metrics": [
+    {
+      "n_input_channels": 5,
+      "rmse": 2.4772198730044894,
+      "mae": 1.8948675526512995,
+      "pearson_r": 0.9721883535385132,
+      "r2": 0.9450309572739274
+    },
+    {
+      "n_input_channels": 10,
+      "rmse": 1.9403869575924344,
+      "mae": 1.4466951158311632,
+      "pearson_r": 0.9825551377402412,
+      "r2": 0.9653914630005767
+    },
+    {
+      "n_input_channels": 15,
+      "rmse": 2.2123064200083413,
+      "mae": 1.6231934361987643,
+      "pearson_r": 0.9773999518818326,
+      "r2": 0.9551696851240759
+    }
+  ]
+}

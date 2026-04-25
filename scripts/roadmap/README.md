@@ -9,9 +9,7 @@ This folder organizes the project workflow directly against `Report/Roadmap.md`.
   - `scripts/data_creation/validate_bci_preprocessing.py`
 - Phase 2 (Baseline Models)
   - `scripts/channel_analysis/phase2_bci_baselines.py`
-  - `scripts/roadmap/phase2_bem_physics_benchmark.py`
-  - `scripts/roadmap/phase2_deep_models_benchmark.py`
-  - `scripts/roadmap/run_phase2_all.py`
+  - Physics and Pure-AI benchmark execution now lives in method-specific notebooks under `Main_codes/Baseline_analysis/`
 - Phase 3 (Hybrid Model)
   - `scripts/hybrid_ai_approach/phase3_bci_hybrid_residual.py`
 - Phase 4 (Evaluation)
