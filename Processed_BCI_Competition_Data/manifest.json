@@ -1,0 +1,53 @@
+{
+  "input_dir": "C:\\Users\\unnat\\Documents\\GitHub\\EEGFeatureExtraction\\new_repository\\BCI_Competition_Data",
+  "output_dir": "C:\\Users\\unnat\\Documents\\GitHub\\EEGFeatureExtraction\\new_repository\\Processed_BCI_Competition_Data",
+  "glob": "A*T.mat",
+  "window_seconds": {
+    "tmin": 2.0,
+    "tmax": 6.0
+  },
+  "drop_artifacts": true,
+  "eeg_channels": [
+    "Fz",
+    "FC3",
+    "FC1",
+    "FCz",
+    "FC2",
+    "FC4",
+    "C5",
+    "C3",
+    "C1",
+    "Cz",
+    "C2",
+    "C4",
+    "C6",
+    "CP3",
+    "CP1",
+    "CPz",
+    "CP2",
+    "CP4",
+    "P1",
+    "Pz",
+    "P2",
+    "POz"
+  ],
+  "classes": {
+    "1": "left_hand",
+    "2": "right_hand",
+    "3": "feet",
+    "4": "tongue"
+  },
+  "subjects_processed": [
+    "A01T",
+    "A02T",
+    "A03T",
+    "A04T",
+    "A05T",
+    "A06T",
+    "A07T",
+    "A08T",
+    "A09T"
+  ],
+  "total_trials": 2328,
+  "loso_split_count": 9
+}

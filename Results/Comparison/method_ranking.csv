@@ -1,0 +1,7 @@
+rank,method_folder,rmse
+1,Learned_BEM_Residual,2.2232528395122952
+2,Interpolation_Residual,2.2491614200450756
+3,BEM_Residual,2.2828233197883323
+4,Spherical_Spline,2.932748762900369
+5,Distance_Weighted,3.8253793628127486
+6,BEM_Dipole_Model,9.690881185617181
